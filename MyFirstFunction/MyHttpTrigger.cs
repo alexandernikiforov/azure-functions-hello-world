@@ -11,7 +11,7 @@ namespace MyFirstFunction
 {
     public static class MyHttpTrigger
     {
-        [FunctionName("MyHttpTrigger")]
+        [FunctionName("http")]
         public static async Task<IActionResult> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]
             HttpRequest req, ILogger log)
