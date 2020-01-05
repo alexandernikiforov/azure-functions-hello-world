@@ -1,0 +1,39 @@
+﻿trigger:
+  - master
+
+stages:
+  - stage: build
+    jobs:
+      - job: build
+        pool:
+          vmImage: 'windows-latest'
+        variables:
+          BuildConfiguration: 'release'
+        steps:
+          - checkout: self
+          
+          - task: UseDotNet@2
+            inputs:
+              packageType: 'sdk'
+              useGlobalJson: true
+
+          - task: DotNetCoreCLI@2
+            displayName: Build
+            inputs:
+              projects: '**/*.csproj'
+              arguments: '--configuration $(BuildConfiguration)'
+
+          - task: DotNetCoreCLI@2
+            displayName: Publish
+            inputs:
+              command: publish
+              publishWebProjects: false
+              projects: '**/MyFirstFunction.csproj'
+              arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+              zipAfterPublish: false
+
+          - task: PublishPipelineArtifact@0
+            displayName: 'Publish build Artifact'
+            inputs:
+              targetPath: '$(build.artifactstagingdirectory)'
+              artifactName: function
