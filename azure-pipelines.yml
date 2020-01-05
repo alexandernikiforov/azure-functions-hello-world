@@ -52,7 +52,7 @@ stages:
           - task: AzureFunctionApp@1
             displayName: 'Deploy Azure Function App'
             inputs:
-              azureSubscription: 'g-functions-dev-001'
+              azureSubscription: 'rg-functions-dev-001'
               appType: functionApp
               appName: 'azfun-alnifunctions-dev-001'
               package: '$(System.ArtifactsDirectory)/MyFirstFunction'
