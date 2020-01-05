@@ -11,7 +11,7 @@ stages:
           BuildConfiguration: 'release'
         steps:
           - checkout: self
-          
+
           - task: UseDotNet@2
             inputs:
               packageType: 'sdk'
@@ -37,3 +37,23 @@ stages:
             inputs:
               targetPath: '$(build.artifactstagingdirectory)'
               artifactName: function
+  - stage: release
+    jobs:
+      - job: deploy
+        pool:
+          vmImage: 'windows-latest'
+
+        steps:
+          - task: DownloadPipelineArtifact@1
+            inputs:
+              artifactName: function
+              targetPath: '$(System.ArtifactsDirectory)'
+
+          - task: AzureFunctionApp@1
+            displayName: 'Deploy Azure Function App'
+            inputs:
+              azureSubscription: 'g-functions-dev-001'
+              appType: functionApp
+              appName: 'azfun-alnifunctions-dev-001'
+              package: '$(System.ArtifactsDirectory)/MyFirstFunction'
+              deploymentMethod: runFromPackage
