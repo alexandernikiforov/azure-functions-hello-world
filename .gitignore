@@ -1,0 +1,16 @@
+﻿.idea/
+
+[Oo]bj/
+[Bb]in/
+.nuget/
+_ReSharper.*
+packages/
+artifacts/
+*.user
+*.suo
+*.userprefs
+*DS_Store
+*.sln.ide
+# Azure Functions localsettings file
+local.settings.json
+
