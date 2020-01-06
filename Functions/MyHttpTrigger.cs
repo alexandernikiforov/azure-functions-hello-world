@@ -7,11 +7,11 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace MyFirstFunction
+namespace Functions
 {
     public static class MyHttpTrigger
     {
-        [FunctionName("MyFirstFunction")]
+        [FunctionName("Functions")]
         public static async Task<IActionResult> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "hello")]
             HttpRequest req, ILogger log)
