@@ -55,5 +55,5 @@ stages:
               azureSubscription: 'rg-functions-dev-001'
               appType: functionApp
               appName: 'azfun-alnifunctions-dev-001'
-              package: '$(System.ArtifactsDirectory)/MyFirstFunction'
+              package: '$(System.ArtifactsDirectory)/Functions'
               deploymentMethod: runFromPackage
