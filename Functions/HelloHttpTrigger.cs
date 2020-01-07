@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Functions
 {
-    public static class MyHttpTrigger
+    public static class HelloHttpTrigger
     {
         [FunctionName("HelloHttpTrigger")]
         public static async Task<IActionResult> RunAsync(
