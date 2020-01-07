@@ -28,7 +28,8 @@ namespace Functions
                 Fields = FieldBuilder.BuildForType<Hotel>()
             };
 
-            var index = _searchServiceClient.Indexes.Create(definition);
+            log.LogInformation("Index definition is created");
+            var index = await _searchServiceClient.Indexes.CreateOrUpdateAsync(definition);
 
             log.LogInformation($"Index created or updated: {index.Name}");
         }
