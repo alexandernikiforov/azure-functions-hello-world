@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.EventGrid;
 using Microsoft.Azure.EventGrid.Models;
+using Microsoft.Azure.EventHubs;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.Search;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,19 @@ namespace Functions
             {
                 var eventGridAccessKey = System.Environment.GetEnvironmentVariable("EVENT_GRID_ACCESS_KEY");
                 return new EventGridClient(new TopicCredentials(eventGridAccessKey));
+            }));
+
+            builder.Services.AddSingleton((provider =>
+            {
+                var connectionString = System.Environment.GetEnvironmentVariable("EVENT_HUB_CONNECTION_STRING");
+                var eventHubName = System.Environment.GetEnvironmentVariable("EVENT_HUB_NAME");
+
+                var connectionStringBuilder = new EventHubsConnectionStringBuilder(connectionString)
+                {
+                    EntityPath = eventHubName
+                };
+
+                return EventHubClient.CreateFromConnectionString(connectionStringBuilder.ToString());
             }));
         }
     }
