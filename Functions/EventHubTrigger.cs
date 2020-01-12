@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs;
+﻿using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 
 namespace Functions
@@ -8,11 +7,12 @@ namespace Functions
     {
         [FunctionName("EventHubTrigger")]
         [return: ServiceBus("sbq-alnitest", Connection = "SERVICE_BUS_CONNECTION_STRING")]
-        public static async Task RunAsync(
+        public static string RunAsync(
             [EventHubTrigger("evh-alnitest-dev-001", Connection = "EVENT_HUB_CONNECTION_STRING")]
             string myEventHubMessage, ILogger log)
         {
             log.LogInformation($"C# Event Hub trigger function processed a message: {myEventHubMessage}");
+            return myEventHubMessage;
         }
     }
 }
