@@ -7,6 +7,7 @@ namespace Functions
     public static class EventHubTrigger
     {
         [FunctionName("EventHubTrigger")]
+        [return: ServiceBus("sbq-alnitest", Connection = "SERVICE_BUS_CONNECTION_STRING")]
         public static async Task RunAsync(
             [EventHubTrigger("evh-alnitest-dev-001", Connection = "EVENT_HUB_CONNECTION_STRING")]
             string myEventHubMessage, ILogger log)
