@@ -1,6 +1,7 @@
 ﻿// Default URL for triggering event grid function in the local environment.
 // http://localhost:7071/runtime/webhooks/EventGrid?functionName=GridTrigger
 
+using System;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace Functions
             {
                 var message = $"{data} : {i} at {time}";
                 await _eventHubClient.SendAsync(new EventData(Encoding.UTF8.GetBytes(message)));
+                Console.WriteLine($"event successfully sent {message}");
             }
         }
     }
