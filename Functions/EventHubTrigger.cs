@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Azure.EventHubs;
+﻿using Microsoft.Azure.EventHubs;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 
@@ -8,16 +7,19 @@ namespace Functions
     public static class EventHubTrigger
     {
         [FunctionName("EventHubTrigger")]
-        public static async Task RunAsync(
+        public static void RunAsync(
             [EventHubTrigger("evh-alnitest-dev-001", Connection = "EVENT_HUB_CONNECTION_STRING")]
             EventData[] data,
-            ILogger log, IAsyncCollector<string> queue)
+            [ServiceBus("sbq-alnitest", Connection = "SERVICE_BUS_CONNECTION_STRING")]
+            ICollector<string> queue,
+            ILogger log
+        )
         {
             log.LogInformation($"C# Event Hub trigger function processed a batched message of length: {data.Length}");
 
             foreach (var message in data)
             {
-                await queue.AddAsync(message.Body.ToString());
+                queue.Add(message.Body.ToString());
             }
         }
     }
